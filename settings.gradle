@@ -1,4 +1,3 @@
 include ':easy'
-include ':base'
 include ':app'
 rootProject.name = "Easy App"
