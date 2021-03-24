@@ -20,6 +20,9 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+#--------easy组件---start---------
+-keep class com.sange.easy.net.bean.* { *; }
+#--------easy组件---end---------
 #--------EventBus---start---------
 -keepattributes *Annotation*
 -keepclassmembers class * {

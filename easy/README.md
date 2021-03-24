@@ -4,6 +4,8 @@
 1、首先在app模块的Application中调用Easy.init()方法初始化组件。  
 Easy类：组件的总入口。原则上，所有功能均需通过Easy获取实例。  
 2、如果自定义异常处理器，请继承此EasyExceptionHandler类。
+3、混淆配置  
+如果你的项目开启了混淆，则需要在你的app模块的proguard-rules.pro中[加入此配置](proguard-rules.pro)
 ## 模块说明
 back包：页面侧滑返回，使用说明详见包内README.md;  
 imageLoader包：图片加载框架，使用请调用Easy.getImageLoaderUtil()获取实例；  
