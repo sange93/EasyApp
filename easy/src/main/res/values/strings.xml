@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="easy_error_not_call_easy_init">请在Application类中调用方法:Easy.init()</string>
+    <string name="easy_error_parameter_fail">参数不正确</string>
+    <string name="easy_error_load_image_fail">加载图片失败</string>
+    <string name="easy_error_parse_json">解析Json失败</string>
+    <string name="easy_error_to_json">转化Json失败</string>
+    <string name="easy_error_server_json">服务器错误:Json格式错误</string>
+</resources>
