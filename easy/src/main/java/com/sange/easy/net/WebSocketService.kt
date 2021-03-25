@@ -15,6 +15,7 @@ import java.util.*
  * @author ssq
  */
 abstract class WebSocketService : CoroutineScope by GlobalScope {
+    private val mTag = "WebSocketService"
     /** 重发时间 */
     private val mResentTime = 10000L
     private var webSocket: WebSocket? = null
@@ -52,6 +53,7 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
      * 建立连接
      */
     fun connect() = launch {
+        LogUtils.v("建立Socket连接")
         close()
         //构造request对象
         val request = Request.Builder()
@@ -79,6 +81,7 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
      * 重连
      */
     fun reConnect() {
+        LogUtils.e(mTag,"Socket正在重连...")
         webSocket?.let {
             mStatus = ConnectStatus.Connecting
             webSocket = mClient.newWebSocket(it.request(), mListener)
@@ -205,7 +208,17 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
             count++
             if (mStatus == ConnectStatus.Connecting) return
 //TODO            if ((count % heartInterval == 0 && heartbeatCount > 0) || mStatus != ConnectStatus.Bind) {
-            if ((count % heartInterval == 0 && heartbeatCount > 0) || isDisconnect()) {
+            // 是否心跳异常，条件为一个心跳周期内没有收到心跳回复，则为true 心跳异常，false 连接正常
+            val isHeartbeatException = count % heartInterval == 0 && heartbeatCount > 0
+            // 子类实现的断开连接判定，true 断开连接，false 连接正常
+            val isDisconnect = isDisconnect()
+            if (isHeartbeatException || isDisconnect) {
+                if(isHeartbeatException){
+                    LogUtils.e(mTag,"心跳异常，开始重连")
+                }
+                if(isDisconnect){
+                    LogUtils.e(mTag,"子类逻辑Socket异常，开始重连")
+                }
                 count = 0
                 // 不为0  代表上次没有收到心跳回复，就执行重连
                 reConnect()
