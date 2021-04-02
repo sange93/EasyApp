@@ -96,6 +96,10 @@ open class GlideLoaderImpl(any: Any) : ILoader {
         mRequestManager!!.asFile().load(url).into(MyFileSimpleTarget(callBack))
     }
 
+    override fun preLoad(url: Any) {
+        mRequestManager!!.load(url).diskCacheStrategy(DiskCacheStrategy.DATA).preload()
+    }
+
     override fun resumeRequestsRecursive() {
         mRequestManager!!.resumeRequestsRecursive()
     }

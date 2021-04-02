@@ -53,6 +53,11 @@ interface ILoader {
     fun getFile(url: Any, callBack: ILoaderCallBack<File>)
 
     /**
+     * 预加载图片
+     */
+    fun preLoad(url: Any)
+
+    /**
      * 继续所有的加载请求
      */
     fun resumeRequestsRecursive()

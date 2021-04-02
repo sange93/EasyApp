@@ -112,9 +112,6 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
             }
         }
         // 未连接就不发送消息
-        /*TODO if (mStatus != ConnectStatus.Open && mStatus != ConnectStatus.Bind) {
-            return@withContext
-        }*/
         if (mStatus != ConnectStatus.Open && isDisconnect()) {
             return@withContext
         }
@@ -207,7 +204,6 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
         override fun run() {
             count++
             if (mStatus == ConnectStatus.Connecting) return
-//TODO            if ((count % heartInterval == 0 && heartbeatCount > 0) || mStatus != ConnectStatus.Bind) {
             // 是否心跳异常，条件为一个心跳周期内没有收到心跳回复，则为true 心跳异常，false 连接正常
             val isHeartbeatException = count % heartInterval == 0 && heartbeatCount > 0
             // 子类实现的断开连接判定，true 断开连接，false 连接正常
