@@ -7,6 +7,7 @@ import com.sange.base.util.exception.ExceptionUtil
 import com.sange.base.util.getStringRes
 import com.sange.easy.imageLoader.ImageLoaderUtil
 import com.sange.easy.json.JsonUtil
+import com.sange.easy.storageLite.IStorage
 import com.sange.easy.storageLite.StorageUtil
 
 /**
@@ -48,8 +49,16 @@ object Easy {
 
     /**
      * 轻量级存储工具类
+     *
+     * @param dataFileName 数据文件名
      */
-    fun getStorageUtil() = StorageUtil.instance()
+    fun getStorageUtil(dataFileName: String? = null): IStorage {
+        return if(dataFileName == null){
+            StorageUtil.instance()
+        }else{
+            StorageUtil.instance(dataFileName)
+        }
+    }
 
     /**
      * 图片加载 工具类

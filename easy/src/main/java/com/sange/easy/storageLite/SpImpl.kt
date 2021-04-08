@@ -7,10 +7,10 @@ import com.sange.easy.Easy
  * SharedPreferences 实现类
  *
  * @author ssq
+ * @param fileName 数据文件名，默认为"sp_data"
  */
-class SpImpl: IStorage {
-    private val mSpName = "sp_data"
-    private val mSp by lazy { Easy.getAppContext().getSharedPreferences(mSpName, Context.MODE_PRIVATE) }
+class SpImpl(fileName: String): IStorage {
+    private val mSp by lazy { Easy.getAppContext().getSharedPreferences(fileName, Context.MODE_PRIVATE) }
 
     override fun putString(key: String, value: String) {
         mSp.edit().putString(key,value).apply()
