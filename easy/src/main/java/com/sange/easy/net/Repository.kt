@@ -37,7 +37,8 @@ abstract class Repository : BaseRepository<ApiService>() {
         // 发送请求
         val httpData = api.request(getEncrypt(data), getIV(data))
         // 处理数据
-        if(httpData.data.contains("\"encrypt\":")){
+        val dataString = httpData.data.toString()
+        if(dataString.contains("encrypt")){
             val encryptData = httpData.getEncryptData()
             if (encryptData.encrypt.isNotEmpty() && encryptData.iv.isNotEmpty()) {
                 val httpJson = Easy.getJsonUtil().toJson(encryptData)
@@ -45,7 +46,7 @@ abstract class Repository : BaseRepository<ApiService>() {
                 httpData.decodeJson = AesUtils.getDecodeContent(httpJson)
             }
         }else{
-            httpData.decodeJson = httpData.data
+            httpData.decodeJson = dataString
         }
         LogUtils.v("HTTP解密：${httpData.decodeJson}")
         // 创建结果数据实例

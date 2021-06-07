@@ -10,13 +10,13 @@ import com.sange.easy.Easy
 class HttpData {
     var code = -1// 200 成功
     var message = ""
-    var data = ""
+    var data = Any()
     var decodeJson = ""// 解密后的数据json（本地属性）
 
     /**
      * 获取接收到的加密数据
      */
-    suspend fun getEncryptData() = Easy.getJsonUtil().fromJson(data,EncryptData::class.java)
+    suspend fun getEncryptData() = Easy.getJsonUtil().fromJson(data.toString(),EncryptData::class.java)
 
     /**
      * 获取集合类型的数据
