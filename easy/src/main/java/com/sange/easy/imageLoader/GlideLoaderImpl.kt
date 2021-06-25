@@ -55,6 +55,10 @@ open class GlideLoaderImpl(any: Any) : ILoader {
     private fun getAppContext() = Easy.getAppContext()
 
     override fun displayImage(url: Any?, imageView: ImageView) {
+        if(url == null || (url is String && url.isEmpty())){
+            LogUtils.e("未加载图片，原因：displayImage()中url值为空，intoViewId:${imageView.id}")
+            return
+        }
         val options = RequestOptions()
             .centerInside()
             .priority(Priority.HIGH)
