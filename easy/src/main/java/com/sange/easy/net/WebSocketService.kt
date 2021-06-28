@@ -1,7 +1,13 @@
 package com.sange.easy.net
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.os.SystemClock
 import androidx.collection.ArrayMap
 import com.sange.base.util.LogUtils
+import com.sange.easy.Easy
 import com.sange.easy.net.bean.SocketMessage
 import kotlinx.coroutines.*
 import okhttp3.*
@@ -16,6 +22,10 @@ import java.util.*
  */
 abstract class WebSocketService : CoroutineScope by GlobalScope {
     private val mTag = "WebSocketService"
+    /** 心跳接收器 action */
+    private val mActionHeartbeat = "heartbeat"
+    /** 计时器间隔 */
+    private val mTimeInterval = 10000
     /** 重发时间 */
     private val mResentTime = 10000L
     private var webSocket: WebSocket? = null
@@ -25,13 +35,25 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
     var mStatus: ConnectStatus? = null
 
     /** 心跳计时器 */
-    private var mHeartbeatTimer: Timer? = null
+//    private var mHeartbeatTimer: Timer? = null
 
     /** 心跳任务 */
-    private var mHeartbeatTask: HeartbeatTask? = null
+//    private var mHeartbeatTask: HeartbeatTask? = null
+
+    private val mPendingIntent by lazy { buildPending() }
+    private val mAlarmManager by lazy { Easy.getAppContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager }
 
     /** 消息队列 key是服务端返回的event标识，value是消息体,消息不重复存储 */
     private val mMsgQueue = ArrayMap<String, SocketMessage>()
+
+    // 记录心跳次数，收到心跳回复就置为0，否则为1 下次会重连
+    private var heartbeatCount = 0
+
+    // 运行计数，10s执行一次，每18次（180s）发一次心跳
+    private var count = 0
+
+    // 10s执行一次，每18次（180s）发一次心跳
+    private val heartInterval = 18
 
     /**
      * 提供WebSocket服务地址
@@ -62,7 +84,8 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
         webSocket = mClient.newWebSocket(request, mListener)
         mStatus = ConnectStatus.Connecting
         // 启动心跳
-        startHeartbeat()
+//        startHeartbeat()
+        startHeart()
     }
 
     /**
@@ -70,7 +93,8 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
      */
     fun close() {
         webSocket?.close(1000, null)
-        stopHeartbeat()
+//        stopHeartbeat()
+        closeHeart()
     }
 
     fun cancel() {
@@ -83,6 +107,7 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
     fun reConnect() {
         LogUtils.e(mTag,"Socket正在重连...")
         webSocket?.let {
+            it.close(1000, null)
             mStatus = ConnectStatus.Connecting
             webSocket = mClient.newWebSocket(it.request(), mListener)
         }
@@ -150,7 +175,7 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
     /**
      * 启动心跳
      */
-    private fun startHeartbeat() {
+    /*private fun startHeartbeat() {
         if (mHeartbeatTimer == null) {
             mHeartbeatTimer = Timer()
         }
@@ -162,29 +187,89 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-    }
+    }*/
 
     /**
      * 停止心跳
      */
-    private fun stopHeartbeat() {
+    /*private fun stopHeartbeat() {
         mHeartbeatTimer?.cancel()
         mHeartbeatTimer = null
         mHeartbeatTask?.cancel()
         mHeartbeatTask = null
-    }
+    }*/
 
     /**
      * （收到心跳回复时调用）重置心跳
      */
     fun resetHeart(){
-        mHeartbeatTask?.reset()
+//        mHeartbeatTask?.reset()
+        heartbeatCount = 0
+    }
+
+    /**
+     * 构建PendingIntent
+     */
+    private fun buildPending(): PendingIntent {
+        val context = Easy.getAppContext()
+        val intent = Intent(context, WebSocketReceiver::class.java)
+        intent.action = mActionHeartbeat
+        return PendingIntent.getBroadcast(context, 0, intent, 0)
+    }
+
+    /**
+     * 开启心跳
+     */
+    fun startHeart() {
+        mAlarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            SystemClock.elapsedRealtime() + mTimeInterval,
+            mPendingIntent
+        )
+    }
+
+    /**
+     * 关闭心跳
+     */
+    fun closeHeart(){
+        mAlarmManager.cancel(mPendingIntent)
     }
 
     /**
      * 心跳任务
      */
-    inner class HeartbeatTask : TimerTask() {
+    fun onHeartbeatTask(){
+        count++
+        if (mStatus == ConnectStatus.Connecting) return
+        // 是否心跳异常，条件为一个心跳周期内没有收到心跳回复，则为true 心跳异常，false 连接正常
+        val isHeartbeatException = count % heartInterval == 0 && heartbeatCount > 0
+        // 子类实现的断开连接判定，true 断开连接，false 连接正常
+        val isDisconnect = isDisconnect()
+        if (isHeartbeatException || isDisconnect) {
+            if(isHeartbeatException){
+                LogUtils.e(mTag,"心跳异常，开始重连")
+            }
+            if(isDisconnect){
+                LogUtils.e(mTag,"子类逻辑Socket异常，开始重连")
+            }
+            count = 0
+            // 不为0  代表上次没有收到心跳回复，就执行重连
+            reConnect()
+            return
+        } else if (count % heartInterval == 0) {
+            count = 0
+            // 发送心跳
+            heartbeatCount++
+            send(providerHeartbeat())
+        }
+        // 每10s 检测一遍 有没有需要重发的消息
+        reSend()
+    }
+
+    /**
+     * 心跳任务
+     */
+    /*inner class HeartbeatTask : TimerTask() {
         // 记录心跳次数，收到心跳回复就置为0，否则为1 下次会重连
         private var heartbeatCount = 0
 
@@ -194,9 +279,9 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
         // 10s执行一次，每18次（180s）发一次心跳
         private val heartInterval = 18
 
-        /**
+        *//**
          * （收到心跳回复时调用）重置心跳
-         */
+         *//*
         fun reset() {
             heartbeatCount = 0
         }
@@ -228,5 +313,5 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
             // 每10s 检测一遍 有没有需要重发的消息
             reSend()
         }
-    }
+    }*/
 }
