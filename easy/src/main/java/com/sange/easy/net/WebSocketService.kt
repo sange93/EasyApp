@@ -72,6 +72,11 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
     abstract fun providerHeartbeat(): JSONObject
 
     /**
+     * 提供WebSocketReceiver继承类
+     */
+    abstract fun providerReceiver(): Class<*>
+
+    /**
      * 建立连接
      */
     fun connect() = launch {
@@ -207,12 +212,14 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
         heartbeatCount = 0
     }
 
+
+
     /**
      * 构建PendingIntent
      */
     private fun buildPending(): PendingIntent {
         val context = Easy.getAppContext()
-        val intent = Intent(context, WebSocketReceiver::class.java)
+        val intent = Intent(context, providerReceiver())
         intent.action = mActionHeartbeat
         return PendingIntent.getBroadcast(context, 0, intent, 0)
     }
