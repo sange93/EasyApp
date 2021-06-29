@@ -3,7 +3,6 @@ package com.sange.easy.net
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.sange.base.util.LogUtils
 
 /**
  * Socket连接通知接收器
@@ -16,11 +15,10 @@ abstract class WebSocketReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         intent ?: return
         if (intent.action == "heartbeat") {
-            with(providerService()){
+            with(providerService()) {
                 startHeart()
                 onHeartbeatTask()
             }
-            LogUtils.e("收到BroadcastReceiver：heartbeat")
         }
     }
 
