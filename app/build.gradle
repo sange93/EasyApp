@@ -47,7 +47,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // 基础库
-    implementation 'com.github.sange93:BaseApp:1.0.11'
+    implementation 'com.github.sange93:BaseApp:1.0.12'
     // 抽象易组件
     implementation project(':easy')
 }
