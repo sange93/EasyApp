@@ -27,7 +27,10 @@ open class SocketListener(socketService: WebSocketService) : WebSocketListener()
     override fun onOpen(webSocket: WebSocket, response: Response) {
         super.onOpen(webSocket, response)
         LogUtils.v("onOpen")
-        mSocketService.get()?.mStatus = ConnectStatus.Open
+        mSocketService.get()?.let {
+            it.mStatus = ConnectStatus.Open
+            it.resetAllState()
+        }
     }
 
     /**
@@ -53,7 +56,10 @@ open class SocketListener(socketService: WebSocketService) : WebSocketListener()
     override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
         super.onClosed(webSocket, code, reason)
         LogUtils.v("onClosed")
-        mSocketService.get()?.mStatus = ConnectStatus.Closed
+        mSocketService.get()?.let {
+            it.mStatus = ConnectStatus.Closed
+            it.resetAllState()
+        }
     }
 
     /**
@@ -63,9 +69,13 @@ open class SocketListener(socketService: WebSocketService) : WebSocketListener()
         super.onFailure(webSocket, t, response)
         LogUtils.v("onFailure: $t")
         t.printStackTrace()
-        mSocketService.get()?.mStatus = ConnectStatus.Canceled
+        mSocketService.get()?.let {
+            it.mStatus = ConnectStatus.Canceled
+            it.resetAllState()
+        }
         showFailure()
     }
+
     /**
      * 显示网络异常提示
      */

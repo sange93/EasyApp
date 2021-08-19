@@ -46,8 +46,8 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
     /** 消息队列 key是服务端返回的event标识，value是消息体,消息不重复存储 */
     private val mMsgQueue = ArrayMap<String, SocketMessage>()
 
-    /** 记录心跳次数，收到心跳回复就置为0，否则为1 下次会重连 */
-    private var heartbeatCount = 1
+    /** 记录心跳次数，收到心跳回复就置为0，否则为1 下次会重连, 默认值为0 */
+    private var heartbeatCount = 0
 
     // 运行计数，10s执行一次，每18次（180s）发一次心跳
     private var count = 0
@@ -109,6 +109,7 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
      */
     fun reConnect() {
         LogUtils.e(mTag, "Socket正在重连...")
+        resetAllState()
         webSocket?.let {
             it.close(1000, null)
             mStatus = ConnectStatus.Connecting
@@ -176,12 +177,22 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
     }
 
     /**
-     * （收到心跳回复时调用）重置心跳
+     * 重置心跳
+     * 使用场景1：收到心跳回复时调用。
      */
     fun resetHeart() {
         heartbeatCount = 0
     }
 
+    /**
+     * 重置全部状态
+     * 使用场景1：当建立连接成功时，可以调用。
+     */
+    fun resetAllState(){
+        // 心跳计时统计变量复位为0
+        count = 0
+        resetHeart()
+    }
 
     /**
      * 构建PendingIntent
@@ -228,7 +239,6 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
             if (isDisconnect) {
                 LogUtils.e(mTag, "子类逻辑Socket异常，开始重连")
             }
-            count = 0
             // 不为0  代表上次没有收到心跳回复，就执行重连
             reConnect()
             return
