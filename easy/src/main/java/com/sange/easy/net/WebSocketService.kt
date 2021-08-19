@@ -46,8 +46,8 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
     /** 消息队列 key是服务端返回的event标识，value是消息体,消息不重复存储 */
     private val mMsgQueue = ArrayMap<String, SocketMessage>()
 
-    // 记录心跳次数，收到心跳回复就置为0，否则为1 下次会重连
-    private var heartbeatCount = 0
+    /** 记录心跳次数，收到心跳回复就置为0，否则为1 下次会重连 */
+    private var heartbeatCount = 1
 
     // 运行计数，10s执行一次，每18次（180s）发一次心跳
     private var count = 0
