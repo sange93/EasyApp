@@ -233,12 +233,13 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
         // 子类实现的断开连接判定，true 断开连接，false 连接正常
         val isDisconnect = isDisconnect()
         if (isHeartbeatException || isDisconnect) {
-            if (isHeartbeatException) {
-                LogUtils.e(mTag, "心跳异常，开始重连")
+            val error = if (isHeartbeatException) {
+                "心跳异常，开始重连"
+            }else{
+                "子类逻辑Socket异常，开始重连"
             }
-            if (isDisconnect) {
-                LogUtils.e(mTag, "子类逻辑Socket异常，开始重连")
-            }
+            LogUtils.e(mTag, error)
+            onHeartbeatException(error)
             // 不为0  代表上次没有收到心跳回复，就执行重连
             reConnect()
             return
@@ -251,4 +252,11 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
         // 每10s 检测一遍 有没有需要重发的消息
         reSend()
     }
+
+    /**
+     * 心跳发生异常
+     *
+     * @param error 异常描述
+     */
+    open fun onHeartbeatException(error: String) {}
 }
