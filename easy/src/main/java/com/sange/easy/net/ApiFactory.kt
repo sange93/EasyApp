@@ -3,7 +3,7 @@ package com.sange.easy.net
 import android.os.Build
 import com.sange.base.util.LogUtils
 import com.sange.easy.Easy
-import com.sange.easy.json.gson.MGson
+import com.sange.easy.json.GsonHelper
 import okhttp3.FormBody
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -11,7 +11,10 @@ import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.net.ssl.*
+import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLSocketFactory
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 /**
  * 接口请求工厂
@@ -43,7 +46,7 @@ object ApiFactory {
      */
     fun <T> createService(baseUrl: String, clazz: Class<T>): T =
         Retrofit.Builder().baseUrl(baseUrl).client(mClient)
-            .addConverterFactory(GsonConverterFactory.create(MGson.getInstance()))
+            .addConverterFactory(GsonConverterFactory.create(GsonHelper.instance))
             .build().create(clazz)
 
     /**

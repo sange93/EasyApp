@@ -12,7 +12,7 @@ repositories {
 }
 
 group='com.github.sange93'
-version='1.1.12'
+version='1.1.13'
 
 android {
     compileSdkVersion 33
@@ -62,8 +62,10 @@ dependencies {
     // 图片加载库
     api "com.github.bumptech.glide:glide:$glide"
     kapt "com.github.bumptech.glide:compiler:$glide"
-    // Gson
+    // Gson Json 解析框架：https://github.com/google/gson
     implementation "com.google.code.gson:gson:$gson"
+    // Gson 解析容错：https://github.com/getActivity/GsonFactory
+    implementation 'com.github.getActivity:GsonFactory:6.3'
     // EventBus 线程间通讯 观察者模式
     api 'org.greenrobot:eventbus:3.3.1'
     // Retrofit网络请求
@@ -78,7 +80,7 @@ dependencies {
     // leakcanary 内存泄漏分析框架，Logcat会有大量的GC日志，说明有泄露；
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
     // 异常上报 腾讯bugly
-//    implementation "com.tencent.bugly:crashreport:3.3.3"
+//    implementation 'com.tencent.bugly:crashreport:4.1.9'
     // js库
 //    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
     // 视频缓存
@@ -95,7 +97,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.sange93'
                 artifactId = 'EasyApp'
-                version = '1.1.12'
+                version = '1.1.13'
             }
         }
     }

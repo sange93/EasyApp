@@ -2,10 +2,8 @@ package com.sange.easy.json
 
 import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldAttributes
-import com.google.gson.GsonBuilder
 import com.sange.base.util.getStringRes
 import com.sange.easy.R
-import com.sange.easy.json.gson.MGson
 
 /**
  * Gson解析
@@ -21,7 +19,7 @@ class GsonImpl : IJson {
      */
     override fun toJson(src: Any): String {
         try {
-            return MGson.getInstance().toJson(src)
+            return GsonHelper.instance.toJson(src)
         } catch (t: Throwable) {
             t.printStackTrace()
             throw JsonException(t.message ?: R.string.easy_error_to_json.getStringRes())
@@ -47,7 +45,7 @@ class GsonImpl : IJson {
 
                 override fun shouldSkipClass(clazz: Class<*>?): Boolean = false
             }
-            val gson = GsonBuilder().setExclusionStrategies(strategy).create()
+            val gson = GsonHelper.builder().setExclusionStrategies(strategy).create()
             return gson.toJson(src)
         } catch (t: Throwable) {
             t.printStackTrace()
@@ -63,7 +61,7 @@ class GsonImpl : IJson {
      */
     override fun <T> fromJson(json: String, clazz: Class<T>): T {
         try {
-            return MGson.getInstance().fromJson(json, clazz)
+            return GsonHelper.instance.fromJson(json, clazz)
         } catch (t: Throwable) {
             t.printStackTrace()
             throw JsonException(t.message ?: R.string.easy_error_parse_json.getStringRes())
@@ -80,7 +78,7 @@ class GsonImpl : IJson {
      */
     override fun <T> fromJson2List(json: String, clazz: Class<T>): List<T> {
         try {
-            return MGson.parseString2List(json, clazz)
+            return GsonHelper.parseString2List(json, clazz)
         } catch (t: Throwable) {
             t.printStackTrace()
             throw JsonException(t.message ?: R.string.easy_error_parse_json.getStringRes())
