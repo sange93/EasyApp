@@ -25,7 +25,7 @@ import java.lang.reflect.Type
  */
 object GsonHelper {
     /** 获取单例的 Gson 对象（已处理容错）*/
-    val instance: Gson = GsonFactory.getSingletonGson()
+    val instance: Gson = GsonFactory.newGsonBuilder().registerTypeAdapterFactory(GsonFactory(Gson())).create()
 
     /**
      * 创建一个 Gson 构建器（已处理容错）

@@ -12,7 +12,7 @@ repositories {
 }
 
 group='com.github.sange93'
-version='1.1.13'
+version='1.2.0'
 
 android {
     compileSdkVersion 33
@@ -55,17 +55,17 @@ dependencies {
     ext{
         retrofit = '2.9.0'
         glide = '4.13.2'
-        gson = '2.9.1'
+        gson = '2.10.1'
     }
     // 基础库
-    implementation 'com.github.sange93:BaseApp:1.0.18'
+    implementation 'com.github.sange93:BaseApp:1.0.19'
     // 图片加载库
     api "com.github.bumptech.glide:glide:$glide"
     kapt "com.github.bumptech.glide:compiler:$glide"
     // Gson Json 解析框架：https://github.com/google/gson
     implementation "com.google.code.gson:gson:$gson"
     // Gson 解析容错：https://github.com/getActivity/GsonFactory
-    implementation 'com.github.getActivity:GsonFactory:6.3'
+    implementation 'com.github.getActivity:GsonFactory:6.5'
     // EventBus 线程间通讯 观察者模式
     api 'org.greenrobot:eventbus:3.3.1'
     // Retrofit网络请求
@@ -97,7 +97,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.sange93'
                 artifactId = 'EasyApp'
-                version = '1.1.13'
+                version = '1.2.0'
             }
         }
     }
