@@ -24,9 +24,6 @@ object ApiFactory {
     // 日志拦截器
     private val mLoggingInterceptor: Interceptor by lazy { LoggingInterceptor() }
 
-    // OkHttpClient客户端
-    private val mClient: OkHttpClient by lazy { newClient() }
-
     /**
      * 是否为调试接口返回的数据模式
      * 警告：“接口调试模式”已开启，body数据将无法继续传递！！！
@@ -44,15 +41,15 @@ object ApiFactory {
     /**
      * 创建API Service接口实例
      */
-    fun <T> createService(baseUrl: String, clazz: Class<T>): T =
-        Retrofit.Builder().baseUrl(baseUrl).client(mClient)
+    fun <T> createService(baseUrl: String, clazz: Class<T>, initOkHttpClient: (builder: OkHttpClient.Builder) -> Unit): T =
+        Retrofit.Builder().baseUrl(baseUrl).client(newClient(initOkHttpClient))
             .addConverterFactory(GsonConverterFactory.create(GsonHelper.instance))
             .build().create(clazz)
 
     /**
      * OkHttpClient客户端
      */
-    private fun newClient(): OkHttpClient = OkHttpClient.Builder().apply {
+    private fun newClient(initOkHttpClient: (builder: OkHttpClient.Builder) -> Unit): OkHttpClient = OkHttpClient.Builder().apply {
         connectTimeout(30, TimeUnit.SECONDS)// 连接时间：30s超时
         readTimeout(10, TimeUnit.SECONDS)// 读取时间：10s超时
         writeTimeout(10, TimeUnit.SECONDS)// 写入时间：10s超时
@@ -64,6 +61,7 @@ object ApiFactory {
             hostnameVerifier { _, _ -> true }
             // 忽略证书验证 end
         }
+        initOkHttpClient(this)
     }.build()
 
     /**

@@ -1,13 +1,16 @@
 package com.sange.easy.net
 
+import okhttp3.OkHttpClient
+
 /**
  * 网络接口库基类
  *
  * @author ssq
  */
 abstract class BaseRepository<T> {
+    private val initClient: (OkHttpClient.Builder) -> Unit = { initOkHttpClient(it) }
     /** 网络接口实例 */
-    protected val api: T by lazy { ApiFactory.createService( providerBaseUrl(), providerInterface()) }
+    protected val api: T by lazy { ApiFactory.createService( providerBaseUrl(), providerInterface(), initClient) }
 
     /**
      * 提供网络请求根地址
@@ -20,4 +23,9 @@ abstract class BaseRepository<T> {
      * 提供Api接口类
      */
     abstract fun providerInterface(): Class<T>
+
+    /**
+     * 初始化OkHttp客户端, 重写此方法 可自定义OkHttpClient
+     */
+    open fun initOkHttpClient(builder: OkHttpClient.Builder){}
 }

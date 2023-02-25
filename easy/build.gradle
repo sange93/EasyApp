@@ -5,14 +5,8 @@ plugins {
     id 'maven-publish'
 }
 
-repositories {
-    mavenCentral()
-    google()
-    maven { url "https://jitpack.io" }
-}
-
 group='com.github.sange93'
-version='1.2.0'
+version='1.2.1'
 
 android {
     compileSdkVersion 33
@@ -54,7 +48,7 @@ dependencies {
     //-----------以下为定制内容------------
     ext{
         retrofit = '2.9.0'
-        glide = '4.13.2'
+        glide = '4.14.2'
         gson = '2.10.1'
     }
     // 基础库
@@ -97,7 +91,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.sange93'
                 artifactId = 'EasyApp'
-                version = '1.2.0'
+                version = '1.2.1'
             }
         }
     }
