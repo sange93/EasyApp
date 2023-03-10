@@ -17,7 +17,7 @@ class SpImpl(fileName: String): IStorage {
     }
 
     override fun getString(key: String, defaultValue: String): String {
-        return mSp.getString(key,"") ?: ""
+        return mSp.getString(key,defaultValue) ?: defaultValue
     }
 
     override fun putInt(key: String, value: Int) {
@@ -25,7 +25,7 @@ class SpImpl(fileName: String): IStorage {
     }
 
     override fun getInt(key: String, defaultValue: Int): Int {
-        return mSp.getInt(key,-1)
+        return mSp.getInt(key,defaultValue)
     }
 
     override fun putBoolean(key: String, value: Boolean) {
@@ -33,6 +33,6 @@ class SpImpl(fileName: String): IStorage {
     }
 
     override fun getBoolean(key: String, defaultValue: Boolean): Boolean {
-        return mSp.getBoolean(key,false)
+        return mSp.getBoolean(key,defaultValue)
     }
 }
