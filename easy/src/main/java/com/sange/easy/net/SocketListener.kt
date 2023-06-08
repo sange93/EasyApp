@@ -81,7 +81,7 @@ open class SocketListener(socketService: WebSocketService) : WebSocketListener()
      */
     private fun showFailure() = GlobalScope.launch {
         withContext(Dispatchers.Main) {
-            ToastUtils.showShort(R.string.base_error_net.getStringRes())
+            ToastUtils.showShort(R.string.easy_error_net.getStringRes())
         }
     }
 }

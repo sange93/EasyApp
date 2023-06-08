@@ -6,4 +6,5 @@
     <string name="easy_error_parse_json">解析Json失败</string>
     <string name="easy_error_to_json">转化Json失败</string>
     <string name="easy_error_server_json">服务器错误:Json格式错误</string>
+    <string name="easy_error_net">网络错误</string>
 </resources>

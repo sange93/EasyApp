@@ -28,8 +28,22 @@ private class GsonAdapter(private val gson: Gson) : JsonDeserializer<Any> {
             val element = obj.get(it)
             when {
                 element.isJsonNull -> nullKey.add(it)
-                element.isJsonObject -> searchInObject(element.asJsonObject)
-                element.isJsonArray -> searchInArray(element.asJsonArray)
+                element.isJsonObject -> {
+                    val jsonObject = element.asJsonObject
+                    if(jsonObject.isEmpty){
+                        nullKey.add(it)
+                    }else{
+                        searchInObject(jsonObject)
+                    }
+                }
+                element.isJsonArray -> {
+                    val jsonArray = element.asJsonArray
+                    if(jsonArray.isEmpty){
+                        nullKey.add(it)
+                    }else{
+                        searchInArray(jsonArray)
+                    }
+                }
             }
         }
         nullKey.forEach { obj.remove(it) }
