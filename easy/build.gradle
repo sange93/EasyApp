@@ -6,7 +6,7 @@ plugins {
 }
 
 group='com.github.sange93'
-version='1.2.4'
+version='1.2.3'
 
 android {
     compileSdkVersion 33
@@ -91,7 +91,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.sange93'
                 artifactId = 'EasyApp'
-                version = '1.2.4'
+                version = '1.2.3'
             }
         }
     }
