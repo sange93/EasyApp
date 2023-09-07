@@ -62,6 +62,7 @@ dependencies {
     api("com.squareup.retrofit2:converter-gson:2.9.0")
     // OkHttp
     api("com.squareup.okhttp3:okhttp:5.0.0-alpha.4")
+    api("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.4")
 
     //-----------以下为推荐内容，本组件不包含，可在app模块按需添加------------
     // MMKV——基于 mmap 的高性能通用 key-value 组件,用于替代SharedPreferences
