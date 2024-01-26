@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.github.sange93"
-version = "1.2.7"
+version = "1.2.8"
 
 android {
     namespace = "com.sange.easy"
@@ -17,7 +17,6 @@ android {
         minSdk = 21
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-//        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -46,7 +45,7 @@ dependencies {
 
     //-----------以下为定制内容------------
     // 基础库
-    implementation("com.github.sange93:BaseApp:1.0.20")
+    implementation("com.github.sange93:BaseApp:1.1.3")
     // 图片加载库
     api("com.github.bumptech.glide:glide:4.16.0")
 //    kapt("com.github.bumptech.glide:compiler:4.16.0") 迁移ksp
@@ -61,8 +60,8 @@ dependencies {
     api("com.squareup.retrofit2:retrofit:2.9.0")
     api("com.squareup.retrofit2:converter-gson:2.9.0")
     // OkHttp
-    api("com.squareup.okhttp3:okhttp:5.0.0-alpha.4")
-    api("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.4")
+    api("com.squareup.okhttp3:okhttp:5.0.0-alpha.12")
+    api("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.12")
 
     //-----------以下为推荐内容，本组件不包含，可在app模块按需添加------------
     // MMKV——基于 mmap 的高性能通用 key-value 组件,用于替代SharedPreferences
@@ -86,7 +85,7 @@ afterEvaluate {
             create<MavenPublication>("release"){
                 groupId = "com.github.sange93"
                 artifactId = "EasyApp"
-                version = "1.2.7"
+                version = "1.2.8"
                 from(components["release"])
             }
         }
