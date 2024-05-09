@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.sange.easyapp"
-        minSdk = 22
+        minSdk = 19
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -52,7 +52,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     // 基础库
-    implementation("com.github.sange93:BaseApp:1.1.3")
+    implementation("com.github.sange93:BaseApp:1.1.3_compat_1")
     // 抽象易组件
     implementation(project(":easy"))
 }

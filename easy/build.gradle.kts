@@ -14,7 +14,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 19
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -45,7 +45,7 @@ dependencies {
 
     //-----------以下为定制内容------------
     // 基础库
-    implementation("com.github.sange93:BaseApp:1.1.3")
+    implementation("com.github.sange93:BaseApp:1.1.3_compat_1")
     // 图片加载库
     api("com.github.bumptech.glide:glide:4.16.0")
 //    kapt("com.github.bumptech.glide:compiler:4.16.0") 迁移ksp
