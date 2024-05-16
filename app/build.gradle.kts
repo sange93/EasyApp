@@ -52,8 +52,6 @@ dependencies {
 
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    // 基础库
-    implementation("com.github.sange93:BaseApp:1.1.3_compat_1")
     // 抽象易组件
     implementation(project(":easy"))
 }

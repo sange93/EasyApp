@@ -7,6 +7,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
@@ -59,6 +60,29 @@ object ApiFactory {
                 hostnameVerifier { _, _ -> true }
                 // 忽略证书验证 end
             }
+
+            // 解决Android 4.4及以下的系统默认不支持TLS协议----start
+            val trustAllCert = object: X509TrustManager{
+                override fun checkClientTrusted(
+                    chain: Array<out X509Certificate>?,
+                    authType: String?
+                ) {
+                }
+
+                override fun checkServerTrusted(
+                    chain: Array<out X509Certificate>?,
+                    authType: String?
+                ) {
+                }
+
+                override fun getAcceptedIssuers(): Array<X509Certificate> {
+                    return arrayOf()
+                }
+            }
+            val sslSocketFactory = SSLSocketFactoryCompat(trustAllCert)
+            sslSocketFactory(sslSocketFactory, trustAllCert)
+            // 解决Android 4.4及以下的系统默认不支持TLS协议----end
+
             initOkHttpClient(this)
         }.build()
 

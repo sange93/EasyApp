@@ -46,7 +46,7 @@ dependencies {
 
     //-----------以下为定制内容------------
     // 基础库
-    implementation("com.github.sange93:BaseApp:1.1.3_compat_1")
+    api("com.github.sange93:BaseApp:1.1.3_compat_2")
     // 图片加载库
     api("com.github.bumptech.glide:glide:4.16.0")
 //    kapt("com.github.bumptech.glide:compiler:4.16.0") 迁移ksp
@@ -58,11 +58,11 @@ dependencies {
     // EventBus 线程间通讯 观察者模式
     api("org.greenrobot:eventbus:3.3.1")
     // Retrofit网络请求
-    api("com.squareup.retrofit2:retrofit:2.9.0")
-    api("com.squareup.retrofit2:converter-gson:2.9.0")
+    api("com.squareup.retrofit2:retrofit:2.6.4")
+    api("com.squareup.retrofit2:converter-gson:2.6.4")
     // OkHttp
-    api("com.squareup.okhttp3:okhttp:5.0.0-alpha.12")
-    api("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.12")
+    api("com.squareup.okhttp3:okhttp:3.12.13")
+    api("com.squareup.okhttp3:logging-interceptor:3.12.13")
 
     //-----------以下为推荐内容，本组件不包含，可在app模块按需添加------------
     // MMKV——基于 mmap 的高性能通用 key-value 组件,用于替代SharedPreferences
