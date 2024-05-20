@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.github.sange93"
-version = "1.2.8"
+version = "1.2.9"
 
 android {
     namespace = "com.sange.easy"
@@ -35,33 +35,32 @@ android {
 }
 
 dependencies {
-
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 
     //-----------以下为定制内容------------
     // 基础库
-    implementation("com.github.sange93:BaseApp:1.1.3")
+    api(libs.baseapp)
     // 图片加载库
-    api("com.github.bumptech.glide:glide:4.16.0")
+    api(libs.glide)
 //    kapt("com.github.bumptech.glide:compiler:4.16.0") 迁移ksp
-    ksp("com.github.bumptech.glide:ksp:4.16.0")
+    ksp(libs.glide.ksp)
     // Gson Json 解析框架：https://github.com/google/gson
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation(libs.gson)
     // Gson 解析容错：https://github.com/getActivity/GsonFactory
-    implementation("com.github.getActivity:GsonFactory:6.5")
+    implementation(libs.gsonfactory)
     // EventBus 线程间通讯 观察者模式
-    api("org.greenrobot:eventbus:3.3.1")
+    api(libs.eventbus)
     // Retrofit网络请求
-    api("com.squareup.retrofit2:retrofit:2.9.0")
-    api("com.squareup.retrofit2:converter-gson:2.9.0")
+    api(libs.retrofit)
+    api(libs.retrofit.converter.gson)
     // OkHttp
-    api("com.squareup.okhttp3:okhttp:5.0.0-alpha.12")
-    api("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.12")
+    api(libs.okhttp)
+    api(libs.okhttp.logging.interceptor)
 
     //-----------以下为推荐内容，本组件不包含，可在app模块按需添加------------
     // MMKV——基于 mmap 的高性能通用 key-value 组件,用于替代SharedPreferences
@@ -85,7 +84,7 @@ afterEvaluate {
             create<MavenPublication>("release"){
                 groupId = "com.github.sange93"
                 artifactId = "EasyApp"
-                version = "1.2.8"
+                version = "1.2.9"
                 from(components["release"])
             }
         }
