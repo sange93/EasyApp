@@ -5,6 +5,8 @@ import com.sange.base.BaseApplication
 import com.sange.base.util.LogUtils
 import com.sange.base.util.exception.ExceptionUtil
 import com.sange.base.util.getStringRes
+import com.sange.easy.eventBus.EventBus
+import com.sange.easy.eventBus.IEventBus
 import com.sange.easy.imageLoader.ImageLoaderUtil
 import com.sange.easy.json.JsonUtil
 import com.sange.easy.storageLite.IStorage
@@ -71,4 +73,9 @@ object Easy {
      * Json解析处理 工具类
      */
     fun getJsonUtil() = JsonUtil.impl()
+
+    /**
+     * 简易的事件通知，可用于Compose、Activity等界面
+     */
+    fun getEventBus(): IEventBus = EventBus
 }
