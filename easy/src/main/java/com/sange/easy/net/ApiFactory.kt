@@ -18,6 +18,9 @@ import javax.net.ssl.X509TrustManager
  * @author ssq
  */
 object ApiFactory {
+    val mLoggingInterceptor by lazy { HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    } }
 
     /**
      * 是否开启忽略HTTPS证书
@@ -46,12 +49,6 @@ object ApiFactory {
             connectTimeout(30, TimeUnit.SECONDS)// 连接时间：30s超时
             readTimeout(10, TimeUnit.SECONDS)// 读取时间：10s超时
             writeTimeout(10, TimeUnit.SECONDS)// 写入时间：10s超时
-            if (Easy.isDebugMode()) {// 仅debug模式启用日志过滤器
-//            addInterceptor(mLoggingInterceptor)
-                addInterceptor(HttpLoggingInterceptor().apply {
-                    level = HttpLoggingInterceptor.Level.BODY
-                })
-            }
             if (ignoreCertificateEnable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 // 忽略证书验证 start
                 val x509 = X509Manager()

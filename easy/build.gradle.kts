@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.github.sange93"
-version = "1.3.0"
+version = "1.3.1"
 
 android {
     namespace = "com.sange.easy"
@@ -55,10 +55,10 @@ dependencies {
     implementation(libs.gsonfactory)
     // EventBus 线程间通讯 观察者模式
     api(libs.eventbus)
-    // Retrofit网络请求
+    // Retrofit 网络请求 https://github.com/square/retrofit
     api(libs.retrofit)
     api(libs.retrofit.converter.gson)
-    // OkHttp
+    // OkHttp https://github.com/square/okhttp
     api(libs.okhttp)
     api(libs.okhttp.logging.interceptor)
 
@@ -84,7 +84,7 @@ afterEvaluate {
             create<MavenPublication>("release"){
                 groupId = "com.github.sange93"
                 artifactId = "EasyApp"
-                version = "1.3.0"
+                version = "1.3.1"
                 from(components["release"])
             }
         }

@@ -1,5 +1,7 @@
 package com.sange.easy.net
 
+import com.sange.easy.Easy
+import com.sange.easy.net.ApiFactory.mLoggingInterceptor
 import okhttp3.OkHttpClient
 
 /**
@@ -27,5 +29,9 @@ abstract class BaseRepository<T> {
     /**
      * 初始化OkHttp客户端, 重写此方法 可自定义OkHttpClient
      */
-    open fun initOkHttpClient(builder: OkHttpClient.Builder){}
+    open fun initOkHttpClient(builder: OkHttpClient.Builder){
+        if (Easy.isDebugMode()) {// 仅debug模式启用日志过滤器
+            builder.addInterceptor(mLoggingInterceptor)
+        }
+    }
 }
