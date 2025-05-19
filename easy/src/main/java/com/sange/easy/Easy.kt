@@ -1,7 +1,7 @@
 package com.sange.easy
 
 import android.content.Context
-import com.sange.base.BaseApplication
+import com.sange.base.util.AppUtils
 import com.sange.base.util.LogUtils
 import com.sange.base.util.exception.ExceptionUtil
 import com.sange.base.util.getStringRes
@@ -32,7 +32,7 @@ object Easy {
      */
     fun init(appContext: Context, exceptionHandler: EasyExceptionHandler = EasyExceptionHandler()) {
         mAppContext = appContext
-        mIsDebugMode = BaseApplication.isDebugMode
+        mIsDebugMode = AppUtils.isDebugMode
         ExceptionUtil.init(exceptionHandler)
     }
 
