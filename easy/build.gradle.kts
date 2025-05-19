@@ -1,17 +1,17 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.ksp)
     `maven-publish`
 }
 
 group = "com.github.sange93"
-version = "1.3.1"
+version = "1.3.2"
 
 android {
     namespace = "com.sange.easy"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 21
@@ -84,7 +84,7 @@ afterEvaluate {
             create<MavenPublication>("release"){
                 groupId = "com.github.sange93"
                 artifactId = "EasyApp"
-                version = "1.3.1"
+                version = "1.3.2"
                 from(components["release"])
             }
         }
