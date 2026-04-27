@@ -230,6 +230,6 @@ object AesUtils {
             sb.append(tmp)
             n++
         }
-        return sb.toString().toLowerCase(Locale.getDefault())
+        return sb.toString().lowercase(Locale.getDefault())
     }
 }
