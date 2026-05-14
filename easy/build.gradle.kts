@@ -1,7 +1,6 @@
 import com.android.build.api.dsl.LibraryExtension
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
 //    id("kotlin-kapt")
     alias(libs.plugins.ksp)
     `maven-publish`
@@ -56,6 +55,7 @@ dependencies {
     // OkHttp https://github.com/square/okhttp
     api(libs.okhttp)
     api(libs.okhttp.logging.interceptor)
+//    api(lib.kotlinx.serialization)
 
     //-----------以下为推荐内容，本组件不包含，可在app模块按需添加------------
     // MMKV——基于 mmap 的高性能通用 key-value 组件,用于替代SharedPreferences
@@ -80,7 +80,8 @@ afterEvaluate {
                 groupId = "com.github.sange93"
                 artifactId = "EasyApp"
                 version = "1.3.7"
-                from(components["release"])
+//                from(components["release"]) Android Library 项目，组件名是 android，不是 release
+                from(components.findByName("android"))
             }
         }
     }
