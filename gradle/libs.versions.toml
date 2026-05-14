@@ -7,10 +7,11 @@ glideVersion = "5.0.7"
 gsonfactoryVersion = "6.5"
 gsonVersion = "2.13.2"
 kotlin = "2.3.21"
-ksp = "2.3.6"
+ksp = "2.3.7"
 coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
+kotlinxSerializationJson = "1.11.0"
 espressoCore = "3.5.1"
 appcompat = "1.7.1"
 material = "1.12.0"
@@ -26,6 +27,8 @@ glide-ksp = { module = "com.github.bumptech.glide:ksp", version.ref = "glideVers
 gson = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
 gsonfactory = { module = "com.github.getActivity:GsonFactory", version.ref = "gsonfactoryVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+# kotlin json 序列化
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
@@ -39,7 +42,7 @@ retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", ve
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 

@@ -4,6 +4,7 @@ plugins {
 //    id("kotlin-kapt")
     alias(libs.plugins.ksp)
     `maven-publish`
+    alias(libs.plugins.kotlin.serialization)
 }
 
 configure<LibraryExtension> {
@@ -55,7 +56,8 @@ dependencies {
     // OkHttp https://github.com/square/okhttp
     api(libs.okhttp)
     api(libs.okhttp.logging.interceptor)
-//    api(lib.kotlinx.serialization)
+    // kotlin json 序列化
+    api(libs.kotlinx.serialization.json)
 
     //-----------以下为推荐内容，本组件不包含，可在app模块按需添加------------
     // MMKV——基于 mmap 的高性能通用 key-value 组件,用于替代SharedPreferences
