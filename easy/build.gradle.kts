@@ -81,7 +81,7 @@ afterEvaluate {
             create<MavenPublication>("release"){
                 groupId = "com.github.sange93"
                 artifactId = "EasyApp"
-                version = "1.3.7"
+                version = "1.4.0"
 //                from(components["release"]) Android Library 项目，组件名是 android，不是 release
                 from(components.findByName("android"))
             }

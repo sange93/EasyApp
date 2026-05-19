@@ -1,5 +1,5 @@
 [versions]
-agp = "9.2.0"
+agp = "9.2.1"
 baseappVersion = "1.2.8"
 constraintlayout = "2.2.0"
 eventbusVersion = "3.3.1"
