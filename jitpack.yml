@@ -5,7 +5,5 @@ jdk:
 #install:
 #  - echo "Running a custom install command"
 #  - ./gradlew clean install -xtest
-#install:
-#  - ./gradlew :easy:clean :easy:assembleRelease :easy:publishToMavenLocal -xtest
 #env:
 #  MYVAR: "custom environment variable"

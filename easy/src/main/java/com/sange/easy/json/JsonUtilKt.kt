@@ -1,14 +1,14 @@
 package com.sange.easy.json
 
-//import kotlinx.serialization.KSerializer
-//import kotlinx.serialization.json.Json
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.json.Json
 
 /**
  * Json 工具类(支持 Kotlin 数据类的默认参数值)
  */
 object JsonUtilKt {
     // 全局统一的 Json 配置（只初始化一次）
-    /*val json = Json {
+    val json = Json {
         ignoreUnknownKeys = true     // 忽略 JSON 多余字段（必开）
         encodeDefaults = true        // 启用 Kotlin 默认值（必开！）
         explicitNulls = false        // 不序列化 null
@@ -35,5 +35,5 @@ object JsonUtilKt {
     // JSON → 列表
     inline fun <reified T> fromJsonList(jsonStr: String): List<T> {
         return json.decodeFromString(jsonStr)
-    }*/
+    }
 }
