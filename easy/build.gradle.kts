@@ -81,7 +81,7 @@ afterEvaluate {
             create<MavenPublication>("release"){
                 groupId = "com.github.sange93"
                 artifactId = "EasyApp"
-                version = "1.4.4"
+                version = "1.4.5"
                 // AGP 9.x 中，Android Library 的组件名是 "android"
                 // 旧版本 AGP 可能是 "release"
 //                from(components["release"])
