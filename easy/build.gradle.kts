@@ -4,7 +4,7 @@ plugins {
 //    id("kotlin-kapt")
     alias(libs.plugins.ksp)
     `maven-publish`
-    alias(libs.plugins.kotlin.serialization)
+//    alias(libs.plugins.kotlin.serialization)
 }
 
 configure<LibraryExtension> {
@@ -57,7 +57,7 @@ dependencies {
     api(libs.okhttp)
     api(libs.okhttp.logging.interceptor)
     // kotlin json 序列化
-    api(libs.kotlinx.serialization.json)
+//    api(libs.kotlinx.serialization.json)
 
     //-----------以下为推荐内容，本组件不包含，可在app模块按需添加------------
     // MMKV——基于 mmap 的高性能通用 key-value 组件,用于替代SharedPreferences
@@ -81,7 +81,7 @@ afterEvaluate {
             create<MavenPublication>("release"){
                 groupId = "com.github.sange93"
                 artifactId = "EasyApp"
-                version = "1.4.5"
+                version = "1.4.6"
                 // AGP 9.x 中，Android Library 的组件名是 "android"
                 // 旧版本 AGP 可能是 "release"
 //                from(components["release"])
