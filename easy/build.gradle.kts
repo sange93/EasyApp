@@ -23,6 +23,13 @@ configure<LibraryExtension> {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
@@ -81,11 +88,12 @@ afterEvaluate {
             create<MavenPublication>("release"){
                 groupId = "com.github.sange93"
                 artifactId = "EasyApp"
-                version = "1.4.6"
+                version = "1.4.7"
                 // AGP 9.x 中，Android Library 的组件名是 "android"
                 // 旧版本 AGP 可能是 "release"
-//                from(components["release"])
-                from(components.findByName("android") ?: components.findByName("release"))
+                from(components["release"])
+//                from(components["android"])
+//                from(components.findByName("android") ?: components.findByName("release"))
             }
         }
     }
