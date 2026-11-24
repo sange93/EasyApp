@@ -37,6 +37,11 @@ configure<LibraryExtension> {
     }
 }
 
+// Kotlin 编译配置：与 app 模块保持一致，使用 JDK 21 工具链
+kotlin {
+    jvmToolchain(21)
+}
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
