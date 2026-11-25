@@ -114,12 +114,12 @@ class SwipeBackHelper(private val mActivity: AppCompatActivity) {
 
     /**
      * 隐藏侧滑 View
-     * - 滑动距离超过一半时调用[Activity.onBackPressed]
+     * - 滑动距离超过一半时触发返回
      */
     private fun hide() {
         if (slideBackView.mProgress >= 0.5f) {
             // 滑动距离超过一半
-            mActivity.onBackPressed()
+            mActivity.onBackPressedDispatcher.onBackPressed()
             if (mActivity.isFinishing) {
                 slideBackView.visibility = View.GONE
             }

@@ -29,8 +29,8 @@ open class GlideLoaderImpl(any: Any) : ILoader {
 
     init {
         when (any) {
-            is Activity -> mRequestManager = Glide.with(any)
             is FragmentActivity -> mRequestManager = Glide.with(any)
+            is Activity -> mRequestManager = Glide.with(any.applicationContext ?: any)
             is View -> mRequestManager = Glide.with(any)
             is Fragment -> mRequestManager = Glide.with(any)
             is Context -> mRequestManager = Glide.with(any)

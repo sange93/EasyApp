@@ -10,6 +10,7 @@ import com.sange.base.util.LogUtils
 import com.sange.easy.Easy
 import com.sange.easy.net.bean.SocketMessage
 import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 import okhttp3.*
 import org.json.JSONObject
 import java.util.*
@@ -20,7 +21,9 @@ import java.util.*
  *
  * @author ssq
  */
-abstract class WebSocketService : CoroutineScope by GlobalScope {
+abstract class WebSocketService : CoroutineScope {
+    private val mScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    override val coroutineContext: CoroutineContext get() = mScope.coroutineContext
     private val mTag = "WebSocketService"
 
     /** 心跳接收器 action */
@@ -102,6 +105,15 @@ abstract class WebSocketService : CoroutineScope by GlobalScope {
 
     fun cancel() {
         webSocket?.cancel()
+    }
+
+    /**
+     * 释放资源：取消协程并关闭连接
+     */
+    fun destroy() {
+        mScope.cancel()
+        close()
+        cancel()
     }
 
     /**

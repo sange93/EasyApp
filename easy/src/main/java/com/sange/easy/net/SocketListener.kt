@@ -5,7 +5,6 @@ import com.sange.base.util.ToastUtils
 import com.sange.base.util.getStringRes
 import com.sange.easy.R
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.Response
@@ -79,9 +78,11 @@ open class SocketListener(socketService: WebSocketService) : WebSocketListener()
     /**
      * 显示网络异常提示
      */
-    private fun showFailure() = GlobalScope.launch {
-        withContext(Dispatchers.Main) {
-            ToastUtils.showShort(R.string.easy_error_net.getStringRes())
+    private fun showFailure() {
+        mSocketService.get()?.launch {
+            withContext(Dispatchers.Main) {
+                ToastUtils.showShort(R.string.easy_error_net.getStringRes())
+            }
         }
     }
 }
