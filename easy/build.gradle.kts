@@ -98,7 +98,7 @@ afterEvaluate {
             create<MavenPublication>("release"){
                 groupId = "com.github.sange93"
                 artifactId = "EasyApp"
-                version = "1.4.8"
+                version = "1.5.0"
                 from(components["release"])
             }
         }
