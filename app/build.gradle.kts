@@ -5,11 +5,15 @@ plugins {
 
 configure<ApplicationExtension> {
     namespace = "com.sange.easyapp"
-    compileSdk = 36
+    compileSdk {
+        version = release(37) {
+            minorApiLevel = 2
+        }
+    }
 
     defaultConfig {
         applicationId = "com.sange.easyapp"
-        minSdk = 22
+        minSdk = 24
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
